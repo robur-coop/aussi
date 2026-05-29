@@ -108,7 +108,7 @@ unikernel using a Dockerfile.
 
 First, we need to tell Docker that there is a new runtime for our unikernels:
 ```bash
-# cat >/etc/docker/daemon.json<<EOF
+$ cat >/etc/docker/daemon.json<<EOF
 {
   "runtimes": {
     "solo5": {
@@ -117,7 +117,7 @@ First, we need to tell Docker that there is a new runtime for our unikernels:
     }
   }
 }
-# systemctl restart docker
+$ systemctl restart docker
 ```
 
 Next, using multi-stage, we can compile and prepare our unikernel:
