@@ -11,6 +11,11 @@ depends: [
   "cmdliner" {>= "2.1.0"}
   "logs"
   "fmt"
+  "ptime"
+  "macaddr"
+  "ipaddr"
+  "fpath"
+  "bos"
 ]
 build: [
   ["dune" "build" "-p" name "-j" jobs]
