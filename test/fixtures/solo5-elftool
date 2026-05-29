@@ -1,0 +1,14 @@
+#!/bin/sh
+# Stub of solo5-elftool for the test suite.
+# Usage: solo5-elftool query-manifest <binary>
+# The reported device list is controlled by $SOLO5_ELFTOOL_DEVICES (a JSON
+# array, default []). Set it to declare devices and exercise manifest
+# validation, e.g.:
+#   SOLO5_ELFTOOL_DEVICES='[{"name":"service","type":"NET_BASIC"}]'
+if [ "$1" = "query-manifest" ]; then
+  printf '{ "type": "solo5.manifest", "version": 1, "devices": %s }\n' \
+    "${SOLO5_ELFTOOL_DEVICES:-[]}"
+  exit 0
+fi
+echo "stub solo5-elftool: unsupported invocation: $*" >&2
+exit 1

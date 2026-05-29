@@ -1,0 +1,17 @@
+opam-version: "2.0"
+name: "aussi"
+version: "0.1.0"
+synopsis: "OCI runtime for Solo5 unikernels"
+maintainer: ["dinosaure"]
+depends: [
+  "ocaml" {>= "5.0"}
+  "dune" {>= "3.0"}
+  "jsont" {>= "0.2.0"}
+  "bytesrw" {>= "0.2.0"}
+  "cmdliner" {>= "2.1.0"}
+  "logs"
+  "fmt"
+]
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+]

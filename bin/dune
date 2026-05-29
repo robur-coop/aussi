@@ -1,0 +1,13 @@
+(executable
+ (name main)
+ (public_name aussi)
+ (libraries
+  aussi
+  cmdliner
+  logs
+  logs.cli
+  logs.fmt
+  fmt.cli
+  fmt.tty
+  ptime
+  ptime.clock.os))

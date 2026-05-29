@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "type": "solo5.config",
+  "argv": [
+    "--ipv4=%{solo5.app.ipv4}",
+    "--name=%{solo5.app.name}"
+  ]
+}

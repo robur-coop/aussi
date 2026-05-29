@@ -1,0 +1,15 @@
+{
+  "ociVersion": "1.0.0",
+  "process": {
+    "args": [ "unikernel.hvt" ],
+    "env": [],
+    "cwd": "/",
+    "terminal": false
+  },
+  "root": { "path": "rootfs", "readonly": true },
+  "hostname": "solo5",
+  "annotations": {
+    "solo5.app.ipv4": "10.0.0.2/24",
+    "solo5.app.name": "web"
+  }
+}

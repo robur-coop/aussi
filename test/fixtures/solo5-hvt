@@ -1,0 +1,30 @@
+#!/bin/sh
+# Stub of solo5-hvt for the test suite. Stays alive until signalled so
+# the container is observably "running"; exits 0 on SIGTERM/SIGINT so
+# recorded exit codes are deterministic.
+#
+# When $SOLO5_HVT_EXPECT is set, treat it as a newline-separated list of
+# argv tokens that must ALL be present in $@; otherwise the stub fails
+# fast (status 1) with a diagnostic on stderr. This lets cram tests
+# verify the annotation → argv translation purely with shell.
+trap 'exit 0' TERM INT
+if [ -n "$SOLO5_HVT_EXPECT" ]; then
+  missing=""
+  IFS='
+'
+  for needed in $SOLO5_HVT_EXPECT; do
+    found=0
+    for got in "$@"; do
+      [ "$got" = "$needed" ] && { found=1; break; }
+    done
+    [ "$found" = 0 ] && missing="$missing $needed"
+  done
+  unset IFS
+  if [ -n "$missing" ]; then
+    echo "stub solo5-hvt: missing expected args:$missing" >&2
+    echo "  actual argv: $*" >&2
+    exit 1
+  fi
+fi
+echo "stub solo5-hvt started with: $*"
+while true; do sleep 0.2; done

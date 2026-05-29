@@ -1,0 +1,3 @@
+(library
+ (name aussi)
+ (libraries bos fpath ipaddr macaddr jsont jsont.bytesrw unix logs logs.fmt))

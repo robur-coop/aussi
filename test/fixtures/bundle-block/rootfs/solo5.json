@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "type": "solo5.config",
+  "blocks": {
+    "disk": { "path": "/var/lib/aussi/disk.img", "sector-size": 4096 }
+  }
+}
