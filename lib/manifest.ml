@@ -11,7 +11,15 @@ type t = { version: int; devices: device list }
 let solo5_elftool =
   match Sys.getenv_opt "SOLO5_ELFTOOL" with
   | Some p -> p
-  | None -> "solo5-elftool"
+  | None ->
+      begin try
+        let self = Unix.readlink "/proc/self/exe" in
+        let candidate =
+          Filename.concat (Filename.dirname self) "solo5-elftool"
+        in
+        if Sys.file_exists candidate then candidate else "solo5-elftool"
+      with _ -> "solo5-elftool"
+      end
 
 let device_type =
   Jsont.enum [ ("NET_BASIC", Net_basic); ("BLOCK_BASIC", Block_basic) ]

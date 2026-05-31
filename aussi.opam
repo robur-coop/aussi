@@ -9,6 +9,7 @@ depends: [
   "jsont" {>= "0.2.0"}
   "bytesrw" {>= "0.2.0"}
   "cmdliner" {>= "2.1.0"}
+  "solo5"
   "logs"
   "fmt"
   "ptime"

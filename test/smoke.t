@@ -42,7 +42,7 @@
       "solo5.cmdline": "Whitespace-separated unikernel argv template (annotations expanded)",
       "solo5.mem": "Guest memory in MB",
       "solo5.net.<name>": "Host tap interface backing a Solo5 net device",
-      "solo5.net.<name>.docker": "Interface name inside the container netns to bridge with (eth0, eth1, …)",
+      "solo5.net.<name>.docker": "Interface name inside the container netns to bridge with (eth0, eth1, ...)",
       "solo5.net.<name>.gw": "IPv4 default gateway",
       "solo5.net.<name>.ip": "IPv4 address in CIDR notation",
       "solo5.net.<name>.ipv6": "IPv6 address in CIDR notation",

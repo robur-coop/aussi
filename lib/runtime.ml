@@ -5,6 +5,17 @@ let ( let* ) = Result.bind
 
 module Log = (val Logs.src_log src)
 
+let find_tool env_var name =
+  match Sys.getenv_opt env_var with
+  | Some p -> p
+  | None ->
+      begin try
+        let self = Unix.readlink "/proc/self/exe" in
+        let candidate = Filename.concat (Filename.dirname self) name in
+        if Sys.file_exists candidate then candidate else name
+      with _ -> name
+      end
+
 module Global : sig
   val get_root : unit -> Fpath.t
   val set_root : Fpath.t -> unit
@@ -13,9 +24,7 @@ end = struct
   let root = ref (Fpath.v "/run/aussi/")
   let get_root () = !root
   let set_root path = root := path
-
-  let solo5_hvt =
-    match Sys.getenv_opt "SOLO5_HVT" with Some p -> p | None -> "solo5-hvt"
+  let solo5_hvt = find_tool "SOLO5_HVT" "solo5-hvt"
 end
 
 let state_dir id = Fpath.(Global.get_root () / id)
