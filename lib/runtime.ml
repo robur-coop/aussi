@@ -176,8 +176,22 @@ let resolve_unikernel_argv rootfs annotations =
   in
   List.map (subst_annotations annotations) template
 
-let build_hvt_args ?(extra_argv = []) annotations interfaces unikernel_path
-    process_args =
+let resolve_block_path rootfs path =
+  let stripped =
+    if String.length path > 0 && path.[0] = '/' then
+      String.sub path 1 (String.length path - 1)
+    else path
+  in
+  match Fpath.of_string stripped with
+  | Ok rel ->
+      let candidate = Fpath.(rootfs // rel) in
+      if Bos.OS.File.exists candidate |> Result.value ~default:false then
+        Fpath.to_string candidate
+      else path
+  | Error _ -> path
+
+let build_hvt_args ?(extra_argv = []) rootfs annotations interfaces
+    unikernel_path process_args =
   let mem =
     match List.assoc_opt "solo5.mem" annotations with
     | Some m -> [ "--mem=" ^ m ]
@@ -188,7 +202,8 @@ let build_hvt_args ?(extra_argv = []) annotations interfaces unikernel_path
     List.filter_map
       (fun (k, v) ->
         match String.split_on_char '.' k with
-        | [ "solo5"; "block"; name ] -> Some ("--block:" ^ name ^ "=" ^ v)
+        | [ "solo5"; "block"; name ] ->
+            Some ("--block:" ^ name ^ "=" ^ resolve_block_path rootfs v)
         | [ "solo5"; "block"; name; "sector-size" ] ->
             Some ("--block-sector-size:" ^ name ^ "=" ^ v)
         | _ -> None)
@@ -630,7 +645,7 @@ let start ~id =
          [aussi __wait] can read it and launch the unikernel correctly. *)
       let extra_argv = resolve_unikernel_argv rootfs state.annotations in
       let hvt_args =
-        build_hvt_args ~extra_argv state.annotations interfaces unikernel
+        build_hvt_args ~extra_argv rootfs state.annotations interfaces unikernel
           config.process.args
       in
       let argv_lines = Global.solo5_hvt :: hvt_args in
