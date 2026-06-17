@@ -38,5 +38,8 @@ jobs:
           opam exec -- dune subst
           opam exec -- ./dist/debian/create_package.sh
           sudo apt-get install -y ./aussi.deb
+      - name: See Docker's configuration
+        run: |
+          ls -la /usr/bin/aussi /usr/share/aussi/aussi-configure.sh || true
           docker info
           RUNTIME_TO_CHECK="solo5"; docker info --format '{{json .Runtimes}}' | grep -q "\"${RUNTIME_TO_CHECK}\"" && exit 0 || exit 1
