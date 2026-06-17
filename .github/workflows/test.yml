@@ -19,8 +19,8 @@ jobs:
             *.opam
       - name: Install aussi on OPAM
         run: opam install -t aussi
-      - name: Set up Docker
-        uses: docker/setup-docker-action@v5
+      - name: Ensure system Docker is running
+        run: sudo systemctl start docker
       - name: Set up apt.robur.coop
         run: |
           sudo mkdir -p /etc/apt/keyrings
