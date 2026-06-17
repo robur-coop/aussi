@@ -21,6 +21,14 @@ jobs:
         run: opam install -t aussi
       - name: Set up Docker
         uses: docker/setup-docker-action@v5
+      - name: Set up apt.robur.coop
+        run: |
+          sudo mkdir -p /etc/apt/keyrings
+          curl -fsSL https://apt.robur.coop/gpg.pub | gpg --dearmor > gpg.pub
+          sudo cp gpg.pub /etc/apt/keyrings/robur.gpg
+          echo "deb [signed-by=/etc/apt/keyrings/robur.gpg] https://apt.robur.coop debian-12 main" | sudo tee /etc/apt/sources.list.d/robur.list
+          sudo apt-get update
+          sudo apt-get install solo5
       - name: Build aussi and install on Ubuntu
         run: |
           opam exec -- dune build -p aussi
