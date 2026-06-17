@@ -12,7 +12,7 @@ bdir=$basedir/_build/install/default/bin
 tmpd=$basedir/_build/stage
 rootdir=$tmpd/rootdir
 bindir=$rootdir/usr/bin
-sharedir=$rootdir/usr/share
+sharedir=$rootdir/usr/share/aussi
 debiandir=$rootdir/DEBIAN
 
 trap 'rm -rf $tmpd' 0 INT EXIT
@@ -27,6 +27,7 @@ install $basedir/dist/aussi-configure.sh $sharedir/aussi-configure.sh
 install -m 0644 $basedir/dist/debian/control $debiandir/control
 install -m 0644 $basedir/dist/debian/changelog $debiandir/changelog
 install -m 0644 $basedir/dist/debian/copyright $debiandir/copyright
+install -m 0755 $basedir/dist/debian/postinst $debiandir/postinst
 
 ARCH=$(dpkg-architecture -q DEB_TARGET_ARCH)
 sed -i -e "s/^Architecture:.*/Architecture: ${ARCH}/" $debiandir/control
