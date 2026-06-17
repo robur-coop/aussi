@@ -37,6 +37,6 @@ jobs:
           opam exec -- git tag -m v0.1.0 v0.1.0
           opam exec -- dune subst
           opam exec -- ./dist/debian/create_package.sh
-          sudo dpkg -i aussi.deb
+          sudo apt-get install -y ./aussi.deb
           docker info
           RUNTIME_TO_CHECK="solo5"; docker info --format '{{json .Runtimes}}' | grep -q "\"${RUNTIME_TO_CHECK}\"" && exit 0 || exit 1
