@@ -24,6 +24,8 @@ jobs:
       - name: Build aussi and install on Ubuntu
         run: |
           opam exec -- dune build -p aussi
+          opam exec -- git tag v0.1.0
           opam exec -- dune subst
           opam exec -- ./dist/debian/create_package.sh
           sudo dpkg -i aussi.deb
+          RUNTIME_TO_CHECK="solo5"; docker info --format '{{json .Runtimes}}' | grep -q "\"${RUNTIME_TO_CHECK}\"" && exit 0 || exit 1
