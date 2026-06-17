@@ -1,0 +1,45 @@
+name: aussi
+on: [push, pull_request]
+jobs:
+  tests:
+    name: Build
+    strategy:
+      matrix:
+        ocaml-version: [5.3, 5.4]
+        operating-system: [ubuntu-latest]
+    runs-on: ${{ matrix.operating-system }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Use OCaml ${{ matrix.ocaml-version }}
+        uses: ocaml/setup-ocaml@v3
+        with:
+          ocaml-compiler: ${{ matrix.ocaml-version }}
+          opam-local-packages: |
+            *.opam
+      - name: Install aussi on OPAM
+        run: opam install -t aussi
+      - name: Ensure system Docker is running
+        run: sudo systemctl start docker
+      - name: Set up apt.robur.coop
+        run: |
+          sudo mkdir -p /etc/apt/keyrings
+          curl -fsSL https://apt.robur.coop/gpg.pub | gpg --dearmor > gpg.pub
+          sudo cp gpg.pub /etc/apt/keyrings/robur.gpg
+          echo "deb [signed-by=/etc/apt/keyrings/robur.gpg] https://apt.robur.coop debian-12 main" | sudo tee /etc/apt/sources.list.d/robur.list
+          sudo apt-get update
+          sudo apt-get install solo5
+      - name: Build aussi and install on Ubuntu
+        run: |
+          opam exec -- dune build -p aussi
+          opam exec -- git config --global user.email "foo@bar"
+          opam exec -- git config --global user.name "Foo Bar"
+          opam exec -- git tag -m v0.1.0 v0.1.0
+          opam exec -- dune subst
+          opam exec -- ./dist/debian/create_package.sh
+          sudo apt-get install -y ./aussi.deb
+      - name: See Docker's configuration
+        run: |
+          ls -la /usr/bin/aussi /usr/share/aussi/aussi-configure.sh || true
+          docker info
+          RUNTIME_TO_CHECK="solo5"; docker info --format '{{json .Runtimes}}' | grep -q "\"${RUNTIME_TO_CHECK}\"" && exit 0 || exit 1

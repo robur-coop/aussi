@@ -1,0 +1,16 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	dune build -p aussi
+
+override_dh_auto_install:
+	install -D -m 0755 _build/default/bin/main.exe debian/aussi/usr/bin/aussi
+	install -D -m 0755 dist/aussi-configure.sh debian/aussi/usr/share/aussi/aussi-configure.sh
+
+override_dh_auto_clean:
+	dune clean
+
+override_dh_auto_test:

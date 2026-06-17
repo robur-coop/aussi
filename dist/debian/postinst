@@ -1,0 +1,8 @@
+#!/bin/sh
+set -e
+
+if [ "$1" = "configure" ]; then
+  AUSSI_BIN=/usr/bin/aussi /usr/share/aussi/aussi-configure.sh install
+fi
+
+#DEBHELPER#

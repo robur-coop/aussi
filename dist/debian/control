@@ -1,0 +1,19 @@
+Package: aussi
+Version: %%VERSION_NUM%%
+Section: unknown
+Priority: optional
+Maintainer: Robur Team <team@robur.coop>
+Build-Depends: debhelper-compat (= 13), ocaml (>= 5.0), opam, dune (>= 3.0)
+Standards-Version: 4.4.1
+Homepage: https://github.com/robur-coop/aussi
+Vcs-Browser: https://github.com/robur-coop/aussi
+Vcs-Git: https://github.com/robur-coop/aussi.git
+Architecture: all
+Depends: solo5 (>= 0.8) | solo5-hvt, iproute2, jq
+Recommends: docker.io | containerd
+Description: OCI runtime for Solo5 unikernels
+ aussi is an OCI-compatible container runtime that launches Solo5
+ unikernels using solo5-hvt instead of standard Linux containers.
+ .
+ It integrates with Docker and containerd, automatically manages TAP
+ network interfaces, and validates unikernel manifests before launch.
