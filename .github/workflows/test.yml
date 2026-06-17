@@ -1,0 +1,29 @@
+name: aussi
+on: [push, pull_request]
+jobs:
+  tests:
+    name: Build
+    strategy:
+      matrix:
+        ocaml-version: [5.3, 5.4]
+        operating-system: [ubuntu-latest]
+    runs-on: ${{ matrix.operating-system }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Use OCaml ${{ matrix.ocaml-version }}
+        uses: ocaml/setup-ocaml@v3
+        with:
+          ocaml-compiler: ${{ matrix.ocaml-version }}
+          opam-local-packages: |
+            *.opam
+      - name: Install aussi on OPAM
+        run: opam install -t aussi
+      - name: Set up Docker
+        uses: docker/setup-docker-action@v5
+      - name: Build aussi and install on Ubuntu
+        run: |
+          opam exec -- dune build -p aussi
+          opam exec -- dune subst
+          opam exec -- ./dist/debian/create_package.sh
+          sudo dpkg -i aussi.deb
