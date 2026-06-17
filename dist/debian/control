@@ -9,8 +9,8 @@ Homepage: https://github.com/robur-coop/aussi
 Vcs-Browser: https://github.com/robur-coop/aussi
 Vcs-Git: https://github.com/robur-coop/aussi.git
 Architecture: all
-Depends: solo5 (>= 0.8) | solo5-hvt, iproute2
-Recommends: jq, docker.io | containerd
+Depends: solo5 (>= 0.8) | solo5-hvt, iproute2, jq
+Recommends: docker.io | containerd
 Description: OCI runtime for Solo5 unikernels
  aussi is an OCI-compatible container runtime that launches Solo5
  unikernels using solo5-hvt instead of standard Linux containers.
