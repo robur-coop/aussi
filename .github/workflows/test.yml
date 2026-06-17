@@ -32,6 +32,8 @@ jobs:
       - name: Build aussi and install on Ubuntu
         run: |
           opam exec -- dune build -p aussi
+          opam exec -- git config --global user.email "foo@bar"
+          opam exec -- git config --global user.name "Foo Bar"
           opam exec -- git tag -m v0.1.0 v0.1.0
           opam exec -- dune subst
           opam exec -- ./dist/debian/create_package.sh
