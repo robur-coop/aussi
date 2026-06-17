@@ -90,8 +90,8 @@ EOF
   fi
 
   if command -v systemctl >/dev/null 2>&1 && systemctl is-active docker >/dev/null 2>&1; then
-    systemctl reload docker
-    echo "docker: reloaded"
+    systemctl restart docker
+    echo "docker: restarted"
   fi
 }
 
@@ -104,8 +104,8 @@ docker_remove() {
       echo "docker: removed solo5 runtime from ${DOCKER_CONF}"
 
       if command -v systemctl >/dev/null 2>&1 && systemctl is-active docker >/dev/null 2>&1; then
-        systemctl reload docker
-        echo "docker: reloaded"
+        systemctl restart docker
+        echo "docker: restarted"
       fi
     fi
   fi
