@@ -9,6 +9,20 @@ the benefits of [IPAM][IPAM] and enable new users to test unikernels with
 relative simplicity. In a real-world deployment scenario, we prefer IP address
 allocation to be managed by our own unikernel: [dnsvizor][dnsvizor].
 
+## Install
+
+You can install `aussi` via `apt`. Our cooperative provides a reproducible
+builder of this package available [here][reproducible-aussi]. You need to add
+`apt.robur.coop` as a new repository and if Docker is already installed on your
+server, we will add `aussi` as a new runtime:
+```shell
+$ curl -fsSL https://apt.robur.coop/gpg.pub | gpg --dearmor > /usr/share/keyrings/apt.robur.coop.gpg
+$ echo "deb [signed-by=/usr/share/keyrings/apt.robur.coop.gpg] https://apt.robur.coop debian-13 main" \
+  | sudo tee /etc/apt/sources.list.d/robur.list
+$ sudo apt update
+$ sudo apt install aussi
+```
+
 ## Give a try!
 
 First, we will install `aussi`, as well as a unikernel, to demonstrate how to
@@ -181,3 +195,4 @@ $ dig -p 1153 @localhost google.com +short
 [IPAM]: https://en.wikipedia.org/wiki/IP_address_management
 [dnsvizor]: https://github.com/robur-coop/dnsvizor
 [annuaire]: https://github.com/dinosaure/annuaire
+[reproducible-aussi]: https://builds.robur.coop/job/aussi/
