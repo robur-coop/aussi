@@ -6,6 +6,7 @@ maintainer: "Romain Calascibetta <romain.calascibetta@gmail.com>"
 authors: ["Romain Calascibetta <romain.calascibetta@gmail.com>"]
 homepage: "https://github.com/robur-coop/aussi"
 bug-reports: "https://github.com/robur-coop/aussi/issues"
+dev-repo: "git+https://github.com/robur-coop/aussi.git"
 depends: [
   "ocaml" {>= "5.0"}
   "dune" {>= "3.0"}
