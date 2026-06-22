@@ -4,6 +4,8 @@ synopsis: "OCI runtime for Solo5 unikernels"
 license: "MIT"
 maintainer: "Romain Calascibetta <romain.calascibetta@gmail.com>"
 authors: ["Romain Calascibetta <romain.calascibetta@gmail.com>"]
+homepage: "https://github.com/robur-coop/aussi"
+bug-reports: "https://github.com/robur-coop/aussi/issues"
 depends: [
   "ocaml" {>= "5.0"}
   "dune" {>= "3.0"}
@@ -25,3 +27,4 @@ build: [
   ["dune" "runtest" "-p" name "-j" jobs] {with-test}
   ["sh" "-ex" "dist/debian/create_package.sh"] {os-family = "debian" | os-family = "ubuntu"}
 ]
+x-maintenance-intent: [ "(latest)" ]
